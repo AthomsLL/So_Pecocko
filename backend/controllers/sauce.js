@@ -25,12 +25,12 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
-    const thingObject = req.file ?
+    const sauceObject = req.file ?
     {
         ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
-    Sauce.updateOne({_id: req.params.id}, {...thingObject, _id: req.params.id })
+    Sauce.updateOne({_id: req.params.id}, {...sauceObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Sauce mise à jour avec succès !'}))
     .catch(error => res.status(400).json({ error }));
 };
