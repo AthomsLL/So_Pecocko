@@ -3,8 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 
-console.log('Le mot de passe doit faire 8 caractères minimum et doit contenir au moins une minuscule, une majuscule et un chiffre');
-
 exports.signup = (req, res, next) => {
     let isValid = true;
     let message = '';
@@ -14,10 +12,15 @@ exports.signup = (req, res, next) => {
     if (!regexEmail.test(req.body.email)) {
         isValid = false;
         message = "Veuillez renseigner une adresse email correcte.";
-    } else if (!regexPassword.test(req.body.password)) {
-        isValid = false;
-        message = "Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre";
     } 
+    if (!regexPassword.test(req.body.password)) {
+        isValid = false;
+        message = "Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre.";
+    } 
+    if (!regexEmail.test(req.body.email) && !regexPassword.test(req.body.password)) {
+        isValid = false;
+        message = "Veuillez renseigner des identifiants de connexion corrects."
+    }
 
     if (!isValid) {
         res.status(403).json({ message: message });
@@ -40,19 +43,19 @@ exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
-                return res.status(401).json({ error: 'Utilisateur non trouvé !'});
+                return res.status(401).json({ error: 'Identifiants incorrects !'});
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ error: 'Mot de passe incorrect !'});
+                        return res.status(401).json({ error: 'Identifiants incorrects !'});
                     }
                     res.status(200).json({
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
                             '$2y$10$Xk.vZ42QBs0MMhnniqtMfu4cgZr7jFuV6J5Orlj1SBvb/xSqKal4y',
-                            { expiresIn: '24h' }
+                            { expiresIn: '1h' }
                         )
                     });
                 })

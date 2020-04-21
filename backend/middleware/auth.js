@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   try {
+    if (!req.headers.authorization) {
+      return new Error("Aucun token d'autorisation trouvé !");
+    }
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, '$2y$10$Xk.vZ42QBs0MMhnniqtMfu4cgZr7jFuV6J5Orlj1SBvb/xSqKal4y');
     const userId = decodedToken.userId;

@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Gestionnaire de routage pour les images
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/uploads/images', express.static(path.join(__dirname, '/uploads/images')));
 
 // Utilisation des routes pour les sauces
 app.use('/api/sauces', sauceRoutes);

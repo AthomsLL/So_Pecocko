@@ -17,6 +17,7 @@ Côté backend, plusieurs dépendances npm sont nécessaires :
     - Mongoose-unique-validator
     - Multer
     - Nodemon
+    - Uniqid
 
 ### Lancement ###
 
