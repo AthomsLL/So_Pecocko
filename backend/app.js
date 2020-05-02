@@ -13,13 +13,20 @@ mongoose.connect('mongodb+srv://Athoms:vGVLH6VlssrBNwaK@sopecockobackend-hmk61.m
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
+mongoose.set('useCreateIndex', true);
 
 // Configuration des headers CORS pour autoriser l'accès multi-origines
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
+});
+
+// Configuration de la suppression du header indiquant le framework utilisé pour le développement du backend
+app.use((req, res, next) => {
+  res.removeHeader('X-Powered-By');
+  next();
 });
 
 // Gestionnaire servant à lire le contenu de la requête
