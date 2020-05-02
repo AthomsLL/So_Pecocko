@@ -66,7 +66,6 @@ updateSauceLikes = (actionUser, numberLikes, method, arrayUsers, userId, id) => 
         $inc: { [actionUser]: numberLikes },
         [method]: { [arrayUsers]: userId },
         _id: id
-<<<<<<< HEAD
     }
 
     return objectLikes;
@@ -110,8 +109,6 @@ exports.likeSauce = (req, res, next) => {
             break;
         default:
             console.error("Impossible d'ajouter Like/Dislike à cette sauce");
-=======
->>>>>>> 2297340504b2e462de7522de7640226c917c3cb7
     }
 
     return objectLikes;
