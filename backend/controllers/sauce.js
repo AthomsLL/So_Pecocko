@@ -142,37 +142,6 @@ exports.likeSauce = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };*/
 
-/*exports.likeSauce = (req, res, next) => {
-    Sauce.findOne({ _id: req.params.id })
-        .then(sauce => {
-            switch (req.body.like) {
-                case 1 && !sauce.usersLiked.find(user => user === req.body.userId):
-                    Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("likes", 1, "$push", "usersLiked", req.body.userId, req.params.id))
-                        .then(() => res.status(200).json({ message: 'Like ajouté avec succès !' }))
-                        .catch(error => res.status(400).json({ error }));
-                    break;
-                case -1 && !sauce.usersDisliked.find(user => user === req.body.userId):
-                    Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("dislikes", 1, "$push", "usersDisliked", req.body.userId, req.params.id))
-                        .then(() => res.status(200).json({ message: 'Dislike ajouté avec succès !' }))
-                        .catch(error => res.status(400).json({ error }));
-                    break;
-                case 0 && sauce.usersLiked.find(user => user === req.body.userId):
-                    Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("likes", -1, "$pull", "usersLiked", req.body.userId, req.params.id))
-                        .then(() => res.status(200).json({ message: 'Like annulé avec succès !' }))
-                        .catch(error => res.status(400).json({ error }));
-                    break;
-                case 0 && sauce.usersDisliked.find(user => user === req.body.userId):
-                    Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("dislikes", -1, "$pull", "usersDisliked", req.body.userId, req.params.id))
-                        .then(() => res.status(200).json({ message: 'Dislike annulé avec succès !' }))
-                        .catch(error => res.status(400).json({ error }));
-                    break;
-                default:
-                    console.log("Impossible d'ajouter Like/Dislike à cette sauce");
-            }
-        })
-        .catch(error => res.status(500).json({ error }));
-};*/
-
 exports.getAllSauces = (req, res, next) => {
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))
