@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const passport = require('passport');
+const connect = require('./config/main');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -8,7 +10,7 @@ const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 // Connexion à la base de données MongoDB
-mongoose.connect('mongodb+srv://Athoms:vGVLH6VlssrBNwaK@sopecockobackend-hmk61.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${connect.dbUsername}:${connect.dbPassword}@${connect.dbCollection}.mongodb.net/${connect.dbName}?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -28,6 +30,12 @@ app.use((req, res, next) => {
   res.removeHeader('X-Powered-By');
   next();
 });
+
+// Initialisation de passport pour chaque requête
+app.use(passport.initialize());
+
+// Appel de la stratégie JWT
+require('./middleware/passport')(passport);
 
 // Gestionnaire servant à lire le contenu de la requête
 app.use(bodyParser.json());

@@ -71,25 +71,23 @@ updateSauceLikes = (actionUser, numberLikes, method, arrayUsers, userId, id) => 
     return objectLikes;
 }
 
+// Fonction permettant d'ajouter un like ou dislike à une sauce
 exports.likeSauce = (req, res, next) => {
     switch (req.body.like){
-        //likes = 1
-        //uptade the sauce, send message/error
+        // like = 1
         case 1:
             Sauce.updateOne({_id: req.params.id}, updateSauceLikes("likes", 1, "$push", "usersLiked", req.body.userId, req.params.id))
                 .then(() => res.status(201).json({ message: 'Like ajouté avec succès !' }))
                 .catch((error) => {res.status(400).json({error: error});});
             break;
-        //likes = -1
-        //uptade the sauce, send message/error
+        // like = -1
         case -1:
             Sauce.updateOne({_id: req.params.id}, updateSauceLikes("dislikes", 1, "$push", "usersDisliked", req.body.userId, req.params.id))
                 .then(() => res.status(201).json({ message: 'Dislike ajouté avec succès !' }))
                 .catch((error) => {res.status(400).json({error: error});});
             break;
-        //cancel = 0
-        //check if the user had liked or disliked the sauce
-        //uptade the sauce, send message/error
+        // cancel = 0
+        // vérifier si l'user a déjà like ou dislike la sauce
         case 0:
             Sauce.findOne({ _id: req.params.id })
                 .then((sauce) => {
@@ -110,30 +108,29 @@ exports.likeSauce = (req, res, next) => {
         default:
             console.error("Impossible d'ajouter Like/Dislike à cette sauce");
     }
-
-    return objectLikes;
 }
 
+/*
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
             switch (req.body.like) {
-                case 1 /*&& !sauce.usersLiked.find(user => user === req.body.userId)*/:
+                case 1 && !sauce.usersLiked.find(user => user === req.body.userId):
                     Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("likes", 1, "$push", "usersLiked", req.body.userId, req.params.id))
                         .then(() => res.status(200).json({ message: 'Like ajouté avec succès !' }))
                         .catch(error => res.status(400).json({ error }));
                     break;
-                case -1 /*&& !sauce.usersDisliked.find(user => user === req.body.userId)*/:
+                case -1 && !sauce.usersDisliked.find(user => user === req.body.userId):
                     Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("dislikes", 1, "$push", "usersDisliked", req.body.userId, req.params.id))
                         .then(() => res.status(200).json({ message: 'Dislike ajouté avec succès !' }))
                         .catch(error => res.status(400).json({ error }));
                     break;
-                case 0 /*&& sauce.usersLiked.find(user => user === req.body.userId)*/:
+                case 0 && sauce.usersLiked.find(user => user === req.body.userId):
                     Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("likes", -1, "$pull", "usersLiked", req.body.userId, req.params.id))
                         .then(() => res.status(200).json({ message: 'Like annulé avec succès !' }))
                         .catch(error => res.status(400).json({ error }));
                     break;
-                case 0 /*&& sauce.usersDisliked.find(user => user === req.body.userId)*/:
+                case 0 && sauce.usersDisliked.find(user => user === req.body.userId):
                     Sauce.updateOne({ _id: req.params.id }, updateSauceLikes("dislikes", -1, "$pull", "usersDisliked", req.body.userId, req.params.id))
                         .then(() => res.status(200).json({ message: 'Dislike annulé avec succès !' }))
                         .catch(error => res.status(400).json({ error }));
@@ -143,7 +140,7 @@ exports.likeSauce = (req, res, next) => {
             }
         })
         .catch(error => res.status(500).json({ error }));
-};
+};*/
 
 /*exports.likeSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })

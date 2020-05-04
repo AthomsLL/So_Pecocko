@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const config = require('../config/main');
 
 module.exports = (req, res, next) => {
   try {
@@ -6,7 +7,7 @@ module.exports = (req, res, next) => {
       return new Error("Aucun token d'autorisation trouvé !");
     }
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, '$2y$10$Xk.vZ42QBs0MMhnniqtMfu4cgZr7jFuV6J5Orlj1SBvb/xSqKal4y');
+    const decodedToken = jwt.verify(token, config.secret);
     const userId = decodedToken.userId;
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Invalid user ID';
