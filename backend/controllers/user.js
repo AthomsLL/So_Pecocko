@@ -1,24 +1,23 @@
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../config/main');
-
+const emailValidator = require('email-validator');
+const passwordValidator = require('../middleware/passwordValidator');
 const User = require('../models/User');
 
 exports.signup = (req, res, next) => {
     let isValid = true;
     let message = '';
-    const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-    const regexEmail = /^.+\@\S+\.\S+$/;
 
-    if (!regexEmail.test(req.body.email)) {
+    if (!emailValidator.validate(req.body.email)) {
         isValid = false;
         message = "Veuillez renseigner une adresse email correcte.";
     } 
-    if (!regexPassword.test(req.body.password)) {
+    if (!passwordValidator.validate(req.body.password)) {
         isValid = false;
         message = "Le mot de passe doit comporter au moins 8 caractères, dont au moins 1 minuscule, 1 majuscule et 1 chiffre.";
     } 
-    if (!regexEmail.test(req.body.email) && !regexPassword.test(req.body.password)) {
+    if (!emailValidator.validate(req.body.email) && !passwordValidator.validate(req.body.password)) {
         isValid = false;
         message = "Veuillez renseigner des identifiants de connexion corrects."
     }
@@ -55,7 +54,7 @@ exports.login = (req, res, next) => {
                         userId: user._id,
                         token: jwt.sign(
                             { userId: user._id },
-                            config.secret,
+                            process.env.SECRET,
                             { expiresIn: '1h' }
                         )
                     });

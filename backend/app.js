@@ -1,8 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
-const connect = require('./config/main');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -10,7 +10,7 @@ const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
 // Connexion à la base de données MongoDB
-mongoose.connect(`mongodb+srv://${connect.dbUsername}:${connect.dbPassword}@${connect.dbCollection}.mongodb.net/${connect.dbName}?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
