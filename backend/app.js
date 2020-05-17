@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
+const helmet = require('helmet');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -29,6 +30,9 @@ app.use((req, res, next) => {
 
 // Initialisation de passport pour chaque requête
 app.use(passport.initialize());
+
+// Initialisation de helmet
+app.use(helmet());
 
 // Appel de la stratégie JWT
 require('./middleware/passport')(passport);
