@@ -30,7 +30,7 @@ exports.updateSauce = (req, res, next) => {
     if (req.file) {
         Sauce.findOne({ _id: req.params.id }, 'imageUrl')
         .then(sauce => {
-            const filename = sauce.imageUrl.split('uploads/images/')[1];
+            const filename = sauce.imageUrl.split('/uploads/images/')[1];
             fs.unlink(`uploads/images/${filename}`, () => {
                 console.log('Ancienne image effacée avec succès !');
             })

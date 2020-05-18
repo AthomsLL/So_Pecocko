@@ -18,21 +18,24 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 mongoose.set('useCreateIndex', true);
 
+// Initialisation de helmet
+app.use(helmet());
+
 // Configuration des headers CORS pour autoriser l'accès multi-origines
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     res.setHeader('Content-Type', 'Application/json');
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.setHeader('Content-Type', 'image/jpg');
+    res.setHeader('Content-Type', 'image/png');
     res.removeHeader('X-Powered-By');
     next();
 });
 
 // Initialisation de passport pour chaque requête
 app.use(passport.initialize());
-
-// Initialisation de helmet
-app.use(helmet());
 
 // Appel de la stratégie JWT
 require('./middleware/passport')(passport);

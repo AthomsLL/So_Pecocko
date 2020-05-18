@@ -7,7 +7,8 @@ exports.nameValidator = [
         message: 'Le nom de la sauce doit faire entre 3 et 50 caractères',
     }),
     validate({
-        validator: 'isAlpha',
+        validator: 'matches',
+        arguments: /^[a-zA-Z\u00c0-\u00FF\s]*$/,
         message: 'Le nom de la sauce ne doit contenir que des lettres',
     })
 ];
@@ -19,7 +20,8 @@ exports.manufacturerValidator = [
         message: 'Le nom du fabricant de la sauce doit faire entre 3 et 30 caractères',
     }),
     validate({
-        validator: 'isAlpha',
+        validator: 'matches',
+        arguments: /^[a-zA-Z\u00c0-\u00FF\s]*$/,
         message: 'Le nom du fabricant de la sauce ne doit contenir que des lettres',
     })
 ];
@@ -31,7 +33,8 @@ exports.descriptionValidator = [
         message: 'La description de la sauce doit faire entre 10 et 150 caractères',
     }),
     validate({
-        validator: 'isAlpha',
+        validator: 'matches',
+        arguments: /^[a-zA-Z\u00c0-\u00FF\s]*$/,
         message: 'La description de la sauce ne doit contenir que des lettres',
     })
 ];
@@ -43,7 +46,8 @@ exports.mainPepperValidator = [
         message: "L'ingrédient principal de la sauce doit faire entre 3 et 20 caractères",
     }),
     validate({
-        validator: 'isAlpha',
+        validator: 'matches',
+        arguments: /^[a-zA-Z\u00c0-\u00FF\s]*$/,
         message: "L'ingrédient principal de la sauce ne doit contenir que des lettres",
     })
 ];
