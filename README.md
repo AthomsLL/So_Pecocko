@@ -9,14 +9,22 @@ La partie backend devait être développée avec NodeJS, Express, Mongoose et un
 Node JS doit être installé localement sur la machine, ainsi que npm.
 @Angular/cli doit être installé localement pour pouvoir lancer le frontend.
 Côté backend, plusieurs dépendances npm sont nécessaires : 
-    - Body-Parser
-    - Express
     - Bcrypt
+    - Body-Parser
+    - Dotenv
+    - Email-validator
+    - Express
+    - Express-bouncer
     - jsonwebtoken
+    - Helmet
     - Mongoose
     - Mongoose-unique-validator
+    - Mongoose-validator
     - Multer
     - Nodemon
+    - Passport
+    - Passport-jwt
+    - Password-validator
     - Uniqid
 
 ### Lancement ###
